@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fikri & Amel — Wedding Invitation</title>
+  <meta name="description" content="Undangan Pernikahan Fikri & Amel, 9 Agustus 2026" />
+
+  <!-- Google Fonts: Cinzel (display) + Cormorant Garamond (editorial) + Jost (clean body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons (lightweight SVG icon set) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN
+       Cinematic opening, fade out saat halaman siap
+  ============================================================ -->
+  <div id="loader">
+    <div class="loader-inner">
+      <p class="loader-subtitle">We're Getting Married</p>
+      <h1 class="loader-title">Fikri <span>&</span> Amel</h1>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       NAVIGASI FIXED
+       Smooth scroll ke setiap section
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-logo">F <span>&</span> A</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#event">Event</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#gift">Gift</a></li>
+    </ul>
+    <!-- Tombol hamburger untuk mobile -->
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">
+      <i class="ph ph-list"></i>
+    </button>
+    <!-- Music toggle -->
+    <button class="music-btn" id="musicBtn" aria-label="Toggle Music">
+      <i class="ph ph-music-note" id="musicIcon"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileClose"><i class="ph ph-x"></i></button>
+    <ul>
+      <li><a href="#home" class="mobile-link">Home</a></li>
+      <li><a href="#story" class="mobile-link">Story</a></li>
+      <li><a href="#event" class="mobile-link">Event</a></li>
+      <li><a href="#gallery" class="mobile-link">Gallery</a></li>
+      <li><a href="#gift" class="mobile-link">Gift</a></li>
+    </ul>
+  </div>
+
+  <!-- Audio Element (silakan ganti src dengan file musik Anda) -->
+  <!-- Note: modern browsers may block autoplay with sound. If autoplay is blocked,
+       the script will attempt to set start time and play after metadata loads.
+       Consider muting initially or asking user interaction to allow audio. -->
+  <audio id="bgMusic" loop autoplay playsinline>
+    <!-- Ganti URL berikut dengan file musik Anda sendiri -->
+    <source src="assets/music/Hanin Dhiya x Ahmad Dhani - Kangen.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    (function(){
+      var audio = document.getElementById('bgMusic');
+      // Set start time to 10 seconds after metadata is loaded
+      function tryStart(){
+        if(!audio) return;
+        try{
+          audio.currentTime = 13;
+        }catch(e){
+          // some browsers may throw if setting currentTime too early; ignore
+        }
+        // Attempt to play (may return a promise)
+        var p = audio.play();
+        if(p && p.catch){
+          p.catch(function(){
+            // Autoplay was prevented. Do nothing; user can toggle music button to start.
+          });
+        }
+      }
+
+      if(audio.readyState >= 1){
+        tryStart();
+      } else {
+        audio.addEventListener('loadedmetadata', tryStart, {once:true});
+      }
+    })();
+  </script>
+
+  <!-- ============================================================
+       SECTION 1 — HERO / HOME
+       Fullscreen cinematic opening
+  ============================================================ -->
+  <section id="home" class="hero">
+    <!-- Particle canvas background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Overlay gradient -->
+    <div class="hero-overlay"></div>
+
+    <!-- Geometric ornament lines -->
+    <div class="hero-ornament top-left"></div>
+    <div class="hero-ornament bottom-right"></div>
+
+    <div class="hero-content">
+      <p class="hero-pre fade-up">The Wedding of</p>
+      <div class="hero-names fade-up">
+        <span class="name-left">Fikri</span>
+        <div class="ampersand-wrap">
+          <span class="hero-ampersand">&</span>
+        </div>
+        <span class="name-right">Amel</span>
+      </div>
+      <p class="hero-date fade-up">9 · VIII · 2026</p>
+      <p class="hero-location fade-up">— Save the Date —</p>
+
+      <!-- Countdown Timer -->
+      <div class="countdown fade-up" id="countdown">
+        <div class="countdown-item">
+          <span class="countdown-number" id="days">00</span>
+          <span class="countdown-label">Hari</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="hours">00</span>
+          <span class="countdown-label">Jam</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="minutes">00</span>
+          <span class="countdown-label">Menit</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="seconds">00</span>
+          <span class="countdown-label">Detik</span>
+        </div>
+      </div>
+
+      <a href="#story" class="hero-cta fade-up">
+        <span>Buka Undangan</span>
+        <i class="ph ph-arrow-down"></i>
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — OUR STORY
+       Cerita singkat kedua mempelai
+  ============================================================ -->
+  <section id="story" class="section story-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Our Story</div>
+      <h2 class="section-title reveal">Dua Jiwa, Satu Takdir</h2>
+      <div class="divider reveal"><span></span><i class="ph ph-heart"></i><span></span></div>
+
+      <div class="story-grid">
+        <!-- Card Pengantin Pria -->
+        <div class="story-card reveal glass-card">
+          <div class="story-card-photo groom-photo">
+            <div class="photo-placeholder">
+              <i class="ph ph-user"></i>
+              <p>Foto Pengantin Pria</p>
+            </div>
+          </div>
+          <div class="story-card-body">
+            <h3>Fikri Saputra</h3>
+            <p class="story-role">Pengantin Pria</p>
+            <p class="story-desc">Putra dari Bapak & Ibu yang terkasih, hadir dengan sepenuh hati untuk menyempurnakan separuh agamanya.</p>
+          </div>
+        </div>
+
+        <!-- Ornament tengah -->
+        <div class="story-center reveal">
+          <div class="ring-icon">
+            <i class="ph ph-ring"></i>
+          </div>
+          <p class="story-tagline">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri..."<br /><em>— QS. Ar-Rum: 21</em></p>
+        </div>
+
+        <!-- Card Pengantin Wanita -->
+        <div class="story-card reveal glass-card">
+          <div class="story-card-photo bride-photo">
+            <div class="photo-placeholder">
+              <i class="ph ph-user"></i>
+              <p>Foto Pengantin Wanita</p>
+            </div>
+          </div>
+          <div class="story-card-body">
+            <h3>GT. Nur Amelia Rahayu</h3>
+            <p class="story-role">Pengantin Wanita</p>
+            <p class="story-desc">Putri dari Bapak & Ibu yang terkasih, hadir dengan senyum yang menghangatkan jiwa sang pujaan hati.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — EVENT DETAILS
+       Informasi akad & resepsi
+  ============================================================ -->
+  <section id="event" class="section event-section">
+    <div class="hero-overlay event-overlay"></div>
+    <div class="section-inner">
+      <div class="section-label reveal light">The Ceremony</div>
+      <h2 class="section-title reveal light">Detail Acara</h2>
+      <div class="divider reveal light"><span></span><i class="ph ph-star-four"></i><span></span></div>
+
+      <div class="event-grid">
+        <!-- Akad Nikah -->
+        <div class="event-card reveal glass-card-dark">
+          <div class="event-icon"><i class="ph ph-mosque"></i></div>
+          <h3>Akad Nikah</h3>
+          <div class="event-details">
+            <div class="event-detail-item">
+              <i class="ph ph-calendar"></i>
+              <span>Minggu, 9 Agustus 2026</span>
+            </div>
+            <div class="event-detail-item">
+              <i class="ph ph-clock"></i>
+              <span>07.00 WITA — Selesai</span>
+            </div>
+            <div class="event-detail-item">
+              <i class="ph ph-map-pin"></i>
+              <span>Wetland Square, Banjarmasin</span>
+            </div>
+          </div>
+          <a href="https://maps.app.goo.gl/2F3N4xmMLF83HKvP6" class="event-maps-btn" target="_blank">
+            <i class="ph ph-navigation-arrow"></i> Buka Maps
+          </a>
+        </div>
+
+        <!-- Resepsi -->
+        <div class="event-card reveal glass-card-dark">
+          <div class="event-icon"><i class="ph ph-heart"></i></div>
+          <h3>Resepsi Pernikahan</h3>
+          <div class="event-details">
+            <div class="event-detail-item">
+              <i class="ph ph-calendar"></i>
+              <span>Minggu, 9 Agustus 2026</span>
+            </div>
+            <div class="event-detail-item">
+              <i class="ph ph-clock"></i>
+              <span>08.00 — 12.00 WITA</span>
+            </div>
+            <div class="event-detail-item">
+              <i class="ph ph-map-pin"></i>
+              <span>Wetland Square, Banjarmasin</span>
+            </div>
+          </div>
+          <a href="https://maps.app.goo.gl/2F3N4xmMLF83HKvP6" class="event-maps-btn" target="_blank">
+            <i class="ph ph-navigation-arrow"></i> Buka Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — GALLERY (Placeholder)
+       Bisa diisi foto asli
+  ============================================================ -->
+  <section id="gallery" class="section gallery-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Moments</div>
+      <h2 class="section-title reveal">Our Gallery</h2>
+      <div class="divider reveal"><span></span><i class="ph ph-camera"></i><span></span></div>
+
+      <div class="gallery-grid">
+        <!-- 6 placeholder foto — ganti src dengan foto asli -->
+        <div class="gallery-item reveal" style="--i:1">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:2">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:3">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:4">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:5">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:6">
+          <div class="gallery-placeholder"><i class="ph ph-image"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 — GIFT / AMPLOP DIGITAL
+       Transfer BCA & SeaBank
+  ============================================================ -->
+  <section id="gift" class="section gift-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Wedding Gift</div>
+      <h2 class="section-title reveal">Amplop Digital</h2>
+      <div class="divider reveal"><span></span><i class="ph ph-gift"></i><span></span></div>
+      <p class="gift-subtitle reveal">Doa restu Anda adalah hadiah terbaik bagi kami. Namun jika berkenan memberikan hadiah, Anda dapat mengirimkan melalui rekening berikut:</p>
+
+      <div class="gift-grid">
+
+        <!-- Card BCA -->
+        <div class="gift-card reveal glass-card">
+          <div class="gift-bank-logo bca-logo">
+            <span>BCA</span>
+          </div>
+          <div class="gift-info">
+            <p class="gift-bank-name">Bank Central Asia</p>
+            <p class="gift-account-name">Fikri Saputra</p>
+            <div class="gift-number-row">
+              <span class="gift-number" id="bca-number">0512463850</span>
+              <button class="copy-btn" data-number="0512463850" data-label="BCA" aria-label="Salin nomor BCA">
+                <i class="ph ph-copy"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card SeaBank -->
+        <div class="gift-card reveal glass-card">
+          <div class="gift-bank-logo sea-logo">
+            <span>SEA</span>
+          </div>
+          <div class="gift-info">
+            <p class="gift-bank-name">SeaBank Indonesia</p>
+            <p class="gift-account-name">GT. Nur Amelia Rahayu</p>
+            <div class="gift-number-row">
+              <span class="gift-number" id="sea-number">901684354011</span>
+              <button class="copy-btn" data-number="901684354011" data-label="SeaBank" aria-label="Salin nomor SeaBank">
+                <i class="ph ph-copy"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+      <i class="ph ph-check-circle"></i>
+      <span id="toastMsg">Nomor berhasil disalin!</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6 — COMMENTS / WISHES
+       Tamu dapat meninggalkan pesan dan komentar
+  ============================================================ -->
+  <section id="comments" class="section comments-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Our Guests</div>
+      <h2 class="section-title reveal">Pesan & Doa Dari Anda</h2>
+      <div class="divider reveal"><span></span><i class="ph ph-chat-teardrop"></i><span></span></div>
+
+      <!-- Form Input Komentar -->
+      <div class="comments-form reveal glass-card">
+        <h3>Tinggalkan Pesan untuk Kami</h3>
+        <form id="commentForm">
+          <div class="form-group">
+            <label for="guestName">Nama Anda</label>
+            <input type="text" id="guestName" name="guestName" placeholder="Masukkan nama Anda" required maxlength="50">
+          </div>
+          <div class="form-group">
+            <label for="guestComment">Pesan / Doa</label>
+            <textarea id="guestComment" name="guestComment" placeholder="Bagikan doa dan pesan terbaik Anda untuk kami..." required maxlength="300" rows="4"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">
+            <i class="ph ph-paper-plane-tilt"></i>
+            <span>Kirim Pesan</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Tampilan Komentar -->
+      <div class="comments-container">
+        <h3 class="comments-title reveal">Pesan dari Tamu Kami</h3>
+        <div class="comments-list" id="commentsList">
+          <!-- Komentar akan ditampilkan di sini via JavaScript -->
+        </div>
+        <p class="no-comments reveal" id="noComments">Belum ada pesan. Jadilah yang pertama mengirimkan pesan untuk kami! 💕</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-ornament"></div>
+    <p class="footer-names">Fikri <span>&</span> Amel</p>
+    <p class="footer-date">9 Agustus 2026</p>
+    <p class="footer-quote">"Maka nikmat Tuhan kamu yang manakah yang kamu dustakan?"</p>
+    <p class="footer-credit">Made with<i class="ph ph-heart-fill"></i> Fixs.Arts Studios</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
